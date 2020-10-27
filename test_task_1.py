@@ -14,7 +14,6 @@ import platform; print(platform.platform(), platform.machine())
 
 # todo:1: check ID for unique! in all column at start!!!
 # todo:2: first check available file!
-# todo:10: close all queue threads on finish
 
 # TODO:0: implement AUTOTEST!
 # TODO:0: use PATHLIB for names
