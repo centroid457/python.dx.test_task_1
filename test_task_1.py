@@ -13,6 +13,7 @@ import platform; print(platform.platform(), platform.machine())
 # licence: 	    GPLv3
 
 # todo:1: check ID for unique! in all column at start!!!
+# todo:2: first check available file!
 # todo:10: close all queue threads on finish
 
 # TODO:0: implement AUTOTEST!
@@ -81,6 +82,8 @@ ERROR_LIST = [
 
 
 def main():
+    # todo:2: first check available file!
+
     make_directories()
 
     wb_defects = Workbook()
@@ -266,12 +269,14 @@ def make_copy_this_script_to_result_folder(defected_xls_filename_nameonly):
 
 
 def alert_error():
-    try:
-        def play_my_sound(sound_winreg_alias_name):
-            winsound.PlaySound(sound=sound_winreg_alias_name, flags=winsound.SND_ALIAS)
+    if threading.active_count() > 1:
+        return
 
-        sound_winreg_alias_name = 'SystemAsterisk'
-        th = Thread(target=play_my_sound, args=(sound_winreg_alias_name,))
+    try:
+        def play_my_sound():
+            winsound.Beep(1000, 500)
+
+        th = Thread(target=play_my_sound)
         th.start()
     except:
         pass
@@ -284,6 +289,3 @@ if __name__ == '__main__':
     print(f"Время выполнения: [{time_of_process}]секунд")
     print("!!!основной ПРОЦЕСС ЗАВЕРШЕН!!!")
 
-    while threading.active_count() > 5:   # todo:10: close all queue threads on finish
-        time.sleep(1)
-        print(threading.active_count())
