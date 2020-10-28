@@ -82,6 +82,9 @@ ERROR_LIST = [
 
 def main():
     # todo:2: first check available file!
+    if not os.path.exists(SOURCE_FILE_NAME):
+        print("ERROR: source file not exists!")
+        return
 
     make_directories()
 
@@ -282,9 +285,9 @@ def alert_error():
 
 
 if __name__ == '__main__':
-    print("*" * 80)
+    print("mainSTART" + "*" * 70)
     time_of_process = timeit.timeit(stmt="main()", number=1, globals=globals())
-    print("*"*80)
+    print("mainFINISH" + "*"*70)
     print(f"Время выполнения: [{time_of_process}]секунд")
     print("!!!основной ПРОЦЕСС ЗАВЕРШЕН!!!")
 
