@@ -83,7 +83,7 @@ ERROR_LIST = [
 def main():
     # todo:2: first check available file!
     if not os.path.exists(SOURCE_FILE_NAME):
-        print("ERROR: source file not exists!")
+        print(f"ERROR: source file not exists! [{SOURCE_FILE_NAME}]")
         return
 
     make_directories()
