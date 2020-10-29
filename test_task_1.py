@@ -13,38 +13,9 @@ import platform; print(platform.platform(), platform.machine())
 # licence: 	    GPLv3
 
 # todo:1: check ID for unique! in all column at start!!!
-# todo:2: first check available file!
 
 # TODO:0: implement AUTOTEST!
 # TODO:0: use PATHLIB for names
-
-"""ЗАДАЧА
-Имеется файл "Задача.xlsx" со следующими данными:
-Код_КА	Документы для формирования	Дата документа	Отправить
-PA_0001	акт,счет	30.06.2020	1
-PA_0002	акт,счет	30.06.2020	1
-PA_0003	акт	25.06.2020	0
-PA_0004	акт,счет	23.06.2020	1
-PA_0005	акт,счет	27.06.2020	1
-PA_0006	акт	17.06.2020	0
-PA_0007	счет	01.07.2020	0
-PA_0008	акт	24.06.2020	0
-PA_0009	счет	15.06.2020	1
-PA_00010	счет	19.06.2020	1
-PA_00011	акт,счет	28.06.2020	1
-...
-
-1) Создайте программный код для формирования пустых файлов в формате *.txt
-с названием по шаблону "КА_<Код КА>_<тип_документа>_<дата>" по списку файла "Задание.xlsx"
-    <Код КА> - значение из столбца А
-    <тип_документа> - значение из столбца B. Значения могут быть указаны через запятую, по каждому из них нужно сформировать отдельный файл
-    <дата> - значение из столбца C
-2) Распределите сформированные файлы на подпапки:
-    Папка1) Файлы, по которым в мастер-файле в столбце D установлено значение 1
-    Папка2) Файлы, у которых в названии файла 2 последние цифры <Кода_КА> одинаковые, например, PA_00011, PA_00022
-    Папка3) Файлы, с датой в промежутке от 20.06.2020 до 10.07.2020
-Если файл подходит под несколько условий, то необходимо делать его копию
-"""
 
 
 import os
@@ -57,7 +28,7 @@ import winsound
 from threading import Thread
 import threading
 
-SOURCE_FILE_NAME = "Задание.xlsx"
+SOURCE_FILE_NAME = "ДАННЫЕ.xlsx"
 
 # PATH FORMAT: without starting and finishing slashes!
 PATH1 = "Папка1"
@@ -81,7 +52,6 @@ ERROR_LIST = [
 
 
 def main():
-    # todo:2: first check available file!
     if not os.path.exists(SOURCE_FILE_NAME):
         print("ERROR: source file not exists!")
         return
@@ -175,7 +145,7 @@ def filter_and_make_path_group(source_line):
     """
     1. Filter actual source line data from Excel
     2. Make corresponding list of path where will actually NEED saving files.
-    Input: actual Excel row (tuple)         =('PA_0001', 'акт,счет', '30.06.2020', 1)
+    Input: actual Excel row (tuple)         =('CA_0001', 'акт,счет', '30.06.2020', 1)
     Output: path list to save files (list)  =['РЕЗУЛЬТАТЫ_выгрузки_2020.10.06_17.58.48/Папка1', 'РЕЗУЛЬТАТЫ_выгрузки_2020.10.06_17.58.48/Папка3']
     """
     output = []
@@ -189,8 +159,8 @@ def filter_and_make_path_group(source_line):
 def make_filename_group(row_tuple):
     """
     in relation to data in 2nd column make filenames need to save
-    Input: actual Excel row (tuple)     =('PA_0001', 'акт,счет', '30.06.2020', 1)
-    Output: filename list (list)        =['КА_PA_0001_акт_30.06.2020.txt', 'КА_PA_0001_счет_30.06.2020.txt']
+    Input: actual Excel row (tuple)     =('CA_0001', 'акт,счет', '30.06.2020', 1)
+    Output: filename list (list)        =['КА_CA_0001_акт_30.06.2020.txt', 'КА_CA_0001_счет_30.06.2020.txt']
     """
     output = []
 
@@ -207,8 +177,8 @@ def make_filename_group(row_tuple):
 def _make_filename(cells_data):
     """
     make filename only from Excel cells by template
-    Input: isolated data for one file (list)    =['PA_0001', 'акт', '30.06.2020', 1]
-    Output: filename (str)                      ="КА_PA_0001_акт_30.06.2020.txt"
+    Input: isolated data for one file (list)    =['CA_0001', 'акт', '30.06.2020', 1]
+    Output: filename (str)                      ="КА_CA_0001_акт_30.06.2020.txt"
     """
     if cells_data == []: return None
 
@@ -223,7 +193,7 @@ def _make_filename(cells_data):
 def make_file(pathname, filename):
     """
     actually make file
-    Input: path (str) and filename (str)    ="РЕЗУЛЬТАТЫ_выгрузки_2020.10.06_18.16.48/Папка1", "КА_PA_0001_акт_30.06.2020.txt"
+    Input: path (str) and filename (str)    ="РЕЗУЛЬТАТЫ_выгрузки_2020.10.06_18.16.48/Папка1", "КА_CA_0001_акт_30.06.2020.txt"
     Output: save file (None)                =
     """
     if pathname in [None, ""] or filename in [None, ""]:
@@ -239,7 +209,7 @@ def delete_files_for_defected_row(source_line):
     """
     if get error trying save any file, there are possibly already saved previous file in group.
     delete all group!
-    Input: actual Excel row (tuple)     =('PA_0001', 'акт,счет', '30.06.2020', 1)
+    Input: actual Excel row (tuple)     =('CA_0001', 'акт,счет', '30.06.2020', 1)
     Output: delete files (None)         =
     """
     delete_files_list = glob.glob(f"{PATH_RESULT}*/*{source_line[0]}_*.txt")
