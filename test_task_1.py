@@ -2,7 +2,9 @@
 # encoding:     UTF-8
 # filename:     test_task_1.py
 # project:      TEST_TASK_1
-# ver/date:	    1.0.2 / 2020.10.27
+script_ver = "1.0.3"
+script_date = "2020.11.04"
+print(f"Version=[{script_ver}] Date=[{script_date}]")
 # company:
 # author:       Starichenko Andrey
 # language:     Python 3.8.6rc1 (AMD64)
