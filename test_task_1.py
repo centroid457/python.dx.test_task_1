@@ -2,8 +2,8 @@
 # encoding:     UTF-8
 # filename:     test_task_1.py
 # project:      TEST_TASK_1
-script_ver = "1.0.3"
-script_date = "2020.11.04"
+script_ver = "1.0.4"
+script_date = "2020.11.06"
 print(f"Version=[{script_ver}] Date=[{script_date}]")
 # company:
 # author:       Starichenko Andrey
@@ -243,14 +243,11 @@ def make_copy_this_script_to_result_folder(defected_xls_filename_nameonly):
 
 
 def alert_error():
-    if threading.active_count() > 1:
-        return
-
     try:
         def play_my_sound():
             winsound.Beep(1000, 500)
 
-        th = Thread(target=play_my_sound)
+        th = Thread(target=play_my_sound, daemon=True)
         th.start()
     except:
         pass
