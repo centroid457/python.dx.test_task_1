@@ -28,7 +28,7 @@ from openpyxl import load_workbook, Workbook    # pip install openpyxl
 import timeit
 import winsound
 from threading import Thread
-import threading
+from datetime import datetime
 
 SOURCE_FILE_NAME = "ДАННЫЕ.xlsx"
 
@@ -255,8 +255,10 @@ def alert_error():
 
 if __name__ == '__main__':
     print("mainSTART" + "*" * 70)
-    time_of_process = timeit.timeit(stmt="main()", number=1, globals=globals())
+    startTime = datetime.now()
+    main()
+    endTime = datetime.now()
+    time_of_process = endTime - startTime
     print("mainFINISH" + "*"*70)
     print(f"Время выполнения: [{time_of_process}]секунд")
     print("!!!основной ПРОЦЕСС ЗАВЕРШЕН!!!")
-
